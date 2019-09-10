@@ -1,11 +1,13 @@
 package com.hz.appLoan.resp;
 
 import lombok.Data;
+import lombok.ToString;
 
 /**
  * 返回给app实体
  */
 @Data
+@ToString
 public class Result {
 
     private int code; //0-请求成功，1-请求失败

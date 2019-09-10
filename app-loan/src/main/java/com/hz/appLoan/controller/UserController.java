@@ -75,8 +75,9 @@ public class UserController {
         if (StringUtils.isEmpty(userReq.getBizType())){
             return Result.getFail(-1,"bizType不能为空");
         }
-
-        return userService.userReg(userReq);
+        Result result = userService.userReg(userReq);
+        System.err.println("["+result+"]");
+        return result;
     }
 
     /**

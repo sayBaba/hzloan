@@ -10,11 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 用户相关
  */
-@Controller
+@RestController
 @RequestMapping("/user")
 public class UserController {
 
@@ -28,7 +29,7 @@ public class UserController {
      * @param userReg
      * @return
      */
-    @RequestMapping("/reg")
+    @RequestMapping("/register")
     public Result userReg(@RequestBody UserRegReq userReg){
         logger.info("接收到手机号：{}的注册请求,验证码：{}",userReg.getMobile(),userReg.getVerifyCode());
         //TODO 空判断

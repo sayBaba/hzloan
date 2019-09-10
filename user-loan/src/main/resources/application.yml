@@ -17,3 +17,10 @@ eureka:
     register-with-eureka: true
     ###是否需要从eureka上检索服务
     fetch-registry: true
+
+feign:
+  client:
+    config:
+      default:           #服务名，填写default为所有服务
+        connectTimeout: 3000
+        readTimeout: 12000

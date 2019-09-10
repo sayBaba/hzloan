@@ -32,3 +32,8 @@ user-loan:
 feign:
   hystrix:
     enabled: true
+  client:
+    config:
+      default:           #服务名，填写default为所有服务
+        connectTimeout: 5000
+        readTimeout: 12000

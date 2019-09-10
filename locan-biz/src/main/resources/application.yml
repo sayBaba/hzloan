@@ -8,6 +8,13 @@ spring:
   application:
     name: locan-biz
 
+feign:
+  client:
+    config:
+      default:           #服务名，填写default为所有服务
+        connectTimeout: 3000
+        readTimeout: 12000
+
 ###服务注册到eureka注册中心的地址
 eureka:
   client:

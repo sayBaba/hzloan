@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 /**
  * 调用用户服务
  */
-@FeignClient(value = "user-loan",fallback = UserServiceImpl.class )
+@FeignClient(name = "user-loan",fallback = UserServiceImpl.class)
 public interface UserService {
 
-    @RequestMapping(value = "/user/reg", method = RequestMethod.POST)
+    @RequestMapping(value = "/user/register", method = RequestMethod.POST)
     public Result userReg(@RequestBody UserReq userReq);
 
 
