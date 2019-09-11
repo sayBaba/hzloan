@@ -1,8 +1,6 @@
 package com.hz.userLoan.service;
 
-import com.hz.userLoan.vo.Result;
-import com.hz.userLoan.vo.UserLoginReq;
-import com.hz.userLoan.vo.UserRegReq;
+import com.hz.userLoan.vo.*;
 
 public interface UserService {
 
@@ -19,5 +17,33 @@ public interface UserService {
      * @return
      */
     public Result userLogin(UserLoginReq userLoginReq);
+
+    /**
+     * 上传身份证信息
+     * @param
+     * @return
+     */
+    public Result updateImg(UserUploadImgReq userUploadImgReq);
+
+    /**
+     * 添加个人资料
+     * @param userBasicInfoReq
+     * @return
+     */
+    public Result addUserInfo( UserBasicInfoReq userBasicInfoReq);
+
+    /**
+     * 添加工作信息
+     * @param
+     * @return
+     */
+    public Result addWorkInfo(UserWorkReq userWorkReq);
+
+    /**
+     * 添加联系人信息
+     * @param
+     * @return
+     */
+    public Result addContant(UserEmergencyContactReq userEmergencyContactReq);
 
 }

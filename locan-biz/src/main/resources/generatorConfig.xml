@@ -53,7 +53,6 @@
             <property name="enableSubPackages" value="false" />
         </javaClientGenerator>
         <!-- 指定数据库表 -->
-        <table schema="UserInfo" tableName="tb_user_info"></table>
-
+        <table schema="ImageInfo" tableName="tb_image"></table>
     </context>
 </generatorConfiguration>

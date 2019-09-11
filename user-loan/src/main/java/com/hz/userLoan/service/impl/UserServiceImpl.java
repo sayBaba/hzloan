@@ -1,18 +1,17 @@
 package com.hz.userLoan.service.impl;
 
 import com.hz.userLoan.IClient.IBizClient;
-import com.hz.userLoan.mapper.UserInfoMapper;
-import com.hz.userLoan.model.UserInfo;
+import com.hz.userLoan.mapper.*;
+import com.hz.userLoan.model.*;
 import com.hz.userLoan.service.UserService;
 import com.hz.userLoan.utils.JWTUtils;
-import com.hz.userLoan.vo.Result;
-import com.hz.userLoan.vo.UserData;
-import com.hz.userLoan.vo.UserLoginReq;
-import com.hz.userLoan.vo.UserRegReq;
+import com.hz.userLoan.vo.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 import java.util.Date;
@@ -28,6 +27,18 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserInfoMapper userInfoMapper;
+
+    @Autowired
+    private ImageMapper imageMapper;
+
+    @Autowired
+    private UserBasicInfoMapper userBasicInfoMapper;
+
+    @Autowired
+    private UserWorkMapper userWorkMapper;
+
+    @Autowired
+    private EmergencyContactMapper contactMapper;
 
     @Autowired
     private IBizClient iBizClient;
@@ -82,5 +93,53 @@ public class UserServiceImpl implements UserService {
         Result result = Result.getSuc();
         result.setT(userData);
         return result;
+    }
+
+    @Override
+    @Transactional
+    public Result updateImg(UserUploadImgReq req) {
+        //第一步往，图片表添加记录
+        Image image = new Image();
+        image.setImgUrl(req.getImgUrl());
+        image.setBizTyp(req.getBizType());
+        image.setCreateDate(new Date());
+        image.setUserId(req.getUserId());
+        int i= imageMapper.insertSelective(image);
+        logger.info("添加图片表：{}",i);
+        //第二步，更新用户身份证和姓名
+        UserInfo userInfo = new UserInfo();
+        userInfo.setRealName(req.getRealName());
+        userInfo.setUserId(req.getUserId());
+        userInfo.setIdCard(req.getIdCard());
+        int l= userInfoMapper.updateByPrimaryKeySelective(userInfo);
+        logger.info("更新数据库记录：{}",l);
+        return Result.getSuc();
+    }
+
+    @Override
+    public Result addUserInfo(UserBasicInfoReq req) {
+        UserBasicInfo userBasicInfo = new UserBasicInfo();
+        BeanUtils.copyProperties(req,userBasicInfo);
+        //TODO,userId 是否存在，存在就更新
+        userBasicInfoMapper.insertSelective(userBasicInfo);
+        return Result.getSuc();
+    }
+
+    @Override
+    public Result addWorkInfo(UserWorkReq userWorkReq) {
+        UserWork userWork = new UserWork();
+        BeanUtils.copyProperties(userWorkReq,userWork);
+        //TODO,userId 是否存在，存在就更新
+        userWorkMapper.insertSelective(userWork);
+        return Result.getSuc();
+    }
+
+    @Override
+    public Result addContant(UserEmergencyContactReq userEmergencyContactReq) {
+
+        EmergencyContact emergencyContact = new EmergencyContact();
+        BeanUtils.copyProperties(userEmergencyContactReq,emergencyContact);
+        contactMapper.insertSelective(emergencyContact);
+        return null;
     }
 }

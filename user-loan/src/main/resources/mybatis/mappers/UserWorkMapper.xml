@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hz.userLoan.mapper.UserWorkMapper" >
+  <resultMap id="BaseResultMap" type="com.hz.userLoan.model.UserWork" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="worke_year" property="workeYear" jdbcType="INTEGER" />
+    <result column="social_year" property="socialYear" jdbcType="INTEGER" />
+    <result column="campany_name" property="campanyName" jdbcType="VARCHAR" />
+    <result column="campany_address" property="campanyAddress" jdbcType="VARCHAR" />
+    <result column="campany_phone" property="campanyPhone" jdbcType="VARCHAR" />
+    <result column="entry_time" property="entryTime" jdbcType="TIMESTAMP" />
+    <result column="monthly_income" property="monthlyIncome" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+  </resultMap>
+
+
+  <sql id="Base_Column_List" >
+    id, worke_year, social_year, campany_name, campany_address, campany_phone, entry_time, 
+    monthly_income, create_date, user_id
+  </sql>
+
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_user_work
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tb_user_work
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insert" parameterType="com.hz.userLoan.model.UserWork" >
+    insert into tb_user_work (id, worke_year, social_year, 
+      campany_name, campany_address, campany_phone, 
+      entry_time, monthly_income, create_date, 
+      user_id)
+    values (#{id,jdbcType=BIGINT}, #{workeYear,jdbcType=INTEGER}, #{socialYear,jdbcType=INTEGER}, 
+      #{campanyName,jdbcType=VARCHAR}, #{campanyAddress,jdbcType=VARCHAR}, #{campanyPhone,jdbcType=VARCHAR}, 
+      #{entryTime,jdbcType=TIMESTAMP}, #{monthlyIncome,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{userId,jdbcType=VARCHAR})
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.hz.userLoan.model.UserWork" >
+    insert into tb_user_work
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="workeYear != null" >
+        worke_year,
+      </if>
+      <if test="socialYear != null" >
+        social_year,
+      </if>
+      <if test="campanyName != null" >
+        campany_name,
+      </if>
+      <if test="campanyAddress != null" >
+        campany_address,
+      </if>
+      <if test="campanyPhone != null" >
+        campany_phone,
+      </if>
+      <if test="entryTime != null" >
+        entry_time,
+      </if>
+      <if test="monthlyIncome != null" >
+        monthly_income,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="workeYear != null" >
+        #{workeYear,jdbcType=INTEGER},
+      </if>
+      <if test="socialYear != null" >
+        #{socialYear,jdbcType=INTEGER},
+      </if>
+      <if test="campanyName != null" >
+        #{campanyName,jdbcType=VARCHAR},
+      </if>
+      <if test="campanyAddress != null" >
+        #{campanyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="campanyPhone != null" >
+        #{campanyPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="entryTime != null" >
+        #{entryTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="monthlyIncome != null" >
+        #{monthlyIncome,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.hz.userLoan.model.UserWork" >
+    update tb_user_work
+    <set >
+      <if test="workeYear != null" >
+        worke_year = #{workeYear,jdbcType=INTEGER},
+      </if>
+      <if test="socialYear != null" >
+        social_year = #{socialYear,jdbcType=INTEGER},
+      </if>
+      <if test="campanyName != null" >
+        campany_name = #{campanyName,jdbcType=VARCHAR},
+      </if>
+      <if test="campanyAddress != null" >
+        campany_address = #{campanyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="campanyPhone != null" >
+        campany_phone = #{campanyPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="entryTime != null" >
+        entry_time = #{entryTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="monthlyIncome != null" >
+        monthly_income = #{monthlyIncome,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.hz.userLoan.model.UserWork" >
+    update tb_user_work
+    set worke_year = #{workeYear,jdbcType=INTEGER},
+      social_year = #{socialYear,jdbcType=INTEGER},
+      campany_name = #{campanyName,jdbcType=VARCHAR},
+      campany_address = #{campanyAddress,jdbcType=VARCHAR},
+      campany_phone = #{campanyPhone,jdbcType=VARCHAR},
+      entry_time = #{entryTime,jdbcType=TIMESTAMP},
+      monthly_income = #{monthlyIncome,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      user_id = #{userId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

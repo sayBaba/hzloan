@@ -18,4 +18,9 @@ public interface UserInfoMapper {
      */
     UserInfo queryUserByMobile(@Param("mobile")String mobile);
 
+    /**
+     * 更新用户的真实姓名和身份证号
+     */
+    int updateByPrimaryKeySelective(UserInfo userInfo);
+
 }

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hz.userLoan.mapper.EmergencyContactMapper" >
+    <resultMap id="BaseResultMap" type="com.hz.userLoan.model.EmergencyContact" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="user_id" property="userId" jdbcType="VARCHAR" />
+        <result column="contact1_name" property="contact1Name" jdbcType="VARCHAR" />
+        <result column="contact1_relation" property="contact1Relation" jdbcType="VARCHAR" />
+        <result column="contact1_phone" property="contact1Phone" jdbcType="VARCHAR" />
+        <result column="contact2_name" property="contact2Name" jdbcType="VARCHAR" />
+        <result column="contact2_relation" property="contact2Relation" jdbcType="VARCHAR" />
+        <result column="contact2_phone" property="contact2Phone" jdbcType="VARCHAR" />
+        <result column="create_date" property="createDate" jdbcType="DATE" />
+    </resultMap>
+
+
+  <sql id="Base_Column_List" >
+    id,user_id, contact1_name, contact1_relation, contact1_phone, contact2_name, contact2_relation,
+    contact2_phone, create_date
+  </sql>
+
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_emergency_contact
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tb_emergency_contact
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insert" parameterType="com.hz.userLoan.model.EmergencyContact" >
+    insert into tb_emergency_contact (id,user_id, contact1_name, contact1_relation,
+      contact1_phone, contact2_name, contact2_relation, 
+      contact2_phone, create_date)
+    values (#{id,jdbcType=BIGINT},#{userId,jdbcType=VARCHAR}, #{contact1Name,jdbcType=VARCHAR}, #{contact1Relation,jdbcType=VARCHAR},
+      #{contact1Phone,jdbcType=VARCHAR}, #{contact2Name,jdbcType=VARCHAR}, #{contact2Relation,jdbcType=VARCHAR}, 
+      #{contact2Phone,jdbcType=VARCHAR}, #{createDate,jdbcType=DATE})
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.hz.userLoan.model.EmergencyContact" >
+    insert into tb_emergency_contact
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+        <if test="id != null" >
+            id,
+        </if>
+
+        <if test="userId != null" >
+            user_id,
+        </if>
+
+        <if test="contact1Name != null" >
+            contact1_name,
+        </if>
+        <if test="contact1Relation != null" >
+            contact1_relation,
+        </if>
+        <if test="contact1Phone != null" >
+            contact1_phone,
+        </if>
+        <if test="contact2Name != null" >
+            contact2_name,
+        </if>
+        <if test="contact2Relation != null" >
+            contact2_relation,
+        </if>
+        <if test="contact2Phone != null" >
+            contact2_phone,
+        </if>
+        <if test="createDate != null" >
+            create_date,
+        </if>
+    </trim>
+
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+        <if test="id != null" >
+            #{id,jdbcType=BIGINT},
+        </if>
+        <if test="userId != null" >
+            #{userId,jdbcType=VARCHAR},
+        </if>
+        <if test="contact1Name != null" >
+            #{contact1Name,jdbcType=VARCHAR},
+        </if>
+        <if test="contact1Relation != null" >
+            #{contact1Relation,jdbcType=VARCHAR},
+        </if>
+        <if test="contact1Phone != null" >
+            #{contact1Phone,jdbcType=VARCHAR},
+        </if>
+        <if test="contact2Name != null" >
+            #{contact2Name,jdbcType=VARCHAR},
+        </if>
+        <if test="contact2Relation != null" >
+            #{contact2Relation,jdbcType=VARCHAR},
+        </if>
+        <if test="contact2Phone != null" >
+            #{contact2Phone,jdbcType=VARCHAR},
+        </if>
+        <if test="createDate != null" >
+            #{createDate,jdbcType=DATE},
+        </if>
+    </trim>
+  </insert>
+
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.hz.userLoan.model.EmergencyContact" >
+    update tb_emergency_contact
+    <set >
+      <if test="contact1Name != null" >
+        contact1_name = #{contact1Name,jdbcType=VARCHAR},
+      </if>
+      <if test="contact1Relation != null" >
+        contact1_relation = #{contact1Relation,jdbcType=VARCHAR},
+      </if>
+      <if test="contact1Phone != null" >
+        contact1_phone = #{contact1Phone,jdbcType=VARCHAR},
+      </if>
+      <if test="contact2Name != null" >
+        contact2_name = #{contact2Name,jdbcType=VARCHAR},
+      </if>
+      <if test="contact2Relation != null" >
+        contact2_relation = #{contact2Relation,jdbcType=VARCHAR},
+      </if>
+      <if test="contact2Phone != null" >
+        contact2_phone = #{contact2Phone,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=DATE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.hz.userLoan.model.TbEmergencyContact" >
+    update tb_emergency_contact
+    set contact1_name = #{contact1Name,jdbcType=VARCHAR},
+      contact1_relation = #{contact1Relation,jdbcType=VARCHAR},
+      contact1_phone = #{contact1Phone,jdbcType=VARCHAR},
+      contact2_name = #{contact2Name,jdbcType=VARCHAR},
+      contact2_relation = #{contact2Relation,jdbcType=VARCHAR},
+      contact2_phone = #{contact2Phone,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=DATE}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>
