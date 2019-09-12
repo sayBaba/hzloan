@@ -1,6 +1,8 @@
 package com.hz.appLoan.controller;
 
+import com.hz.appLoan.req.UserUploadImgReq;
 import com.hz.appLoan.resp.Result;
+import com.hz.appLoan.service.UserService;
 import com.hz.appLoan.utils.QiniuUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,27 +25,36 @@ public class ImageUploadController {
     @Autowired
     private QiniuUtil qiniuUtil;
 
+    @Autowired
+    private UserService userService;
+
     /**
      * 图片上传
      */
-    @ResponseBody
     @RequestMapping("/upload")
-    public Result uploadImg(@RequestParam MultipartFile image, @RequestParam("userId")String userId) {
+    public Result uploadImg(@RequestParam MultipartFile file,
+                            @RequestParam("userId")String userId,
+                            @RequestParam("bizType")String bizType,
+                            @RequestParam("realName")String realName,
+                            @RequestParam("idCard")String idCard) {
         logger.info("接受到userId:{}上传图片请求{}", userId);
 
-        if (image.isEmpty()) {
+        if (file.isEmpty()) {
             return Result.getFail(-1, "文件为空，请重新上传");
         }
+
         try {
-            byte[] bytes = image.getBytes();
-            String imageName = UUID.randomUUID().toString();
             //使用base64方式上传到七牛云
-//            String url = qiniuUtil.put64image(bytes, imageName);
-            String url = qiniuUtil.byteUpLoad(image.getBytes());
-            logger.info("=============图片url:{}","");
-            Result result = new Result();
-            result.setCode(0);
-            result.setMsg("文件上传成功");
+            String url = qiniuUtil.byteUpLoad(file.getBytes());
+            logger.info("用户id：{}上传到七牛云的地址：{}",userId,url);
+            UserUploadImgReq userUploadImgReq = new UserUploadImgReq();
+            userUploadImgReq.setBizType(bizType);
+            userUploadImgReq.setIdCard(idCard);
+            userUploadImgReq.setUserId(userId);
+            userUploadImgReq.setRealName(realName);
+            userUploadImgReq.setImgUrl(url);
+
+            Result result = userService.userImgUpLoad(userUploadImgReq);
             return result;
         } catch (Exception e) {
             logger.error("Exception",e);

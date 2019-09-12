@@ -13,6 +13,20 @@ public enum  Education {
     BK("本科", 3),
     SS("硕士", 4);
 
+    // 成员变量
+    private String name;
+    private int code;
+
+    /**
+     * 构造函数
+     * @param name
+     * @param code
+     */
+    private Education(String name, int code) {
+        this.name = name;
+        this.code = code;
+    }
+
     public String getName() {
         return name;
     }
@@ -26,16 +40,6 @@ public enum  Education {
     }
 
     public void setCode(int code) {
-        this.code = code;
-    }
-
-    // 成员变量
-    private String name;
-    private int code;
-
-
-    private Education(String name, int code) {
-        this.name = name;
         this.code = code;
     }
 
@@ -53,4 +57,7 @@ public enum  Education {
         return null;
     }
 
+    public static void main(String[] args) {
+        System.err.println(Education.getName(0));
+    }
 }

@@ -15,7 +15,6 @@ public interface EmergencyContactMapper {
 
     EmergencyContact selectByPrimaryKey(Long id);
 
-
     int updateByPrimaryKeySelective(EmergencyContact record);
 
     int updateByPrimaryKey(EmergencyContact record);

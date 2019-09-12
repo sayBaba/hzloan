@@ -106,13 +106,18 @@ public class UserServiceImpl implements UserService {
         image.setUserId(req.getUserId());
         int i= imageMapper.insertSelective(image);
         logger.info("添加图片表：{}",i);
-        //第二步，更新用户身份证和姓名
-        UserInfo userInfo = new UserInfo();
-        userInfo.setRealName(req.getRealName());
-        userInfo.setUserId(req.getUserId());
-        userInfo.setIdCard(req.getIdCard());
-        int l= userInfoMapper.updateByPrimaryKeySelective(userInfo);
-        logger.info("更新数据库记录：{}",l);
+
+        //代表身份证上传
+        if(req.getBizType()=="0"){
+            //第二步，更新用户身份证和姓名
+            UserInfo userInfo = new UserInfo();
+            userInfo.setRealName(req.getRealName());
+            userInfo.setUserId(req.getUserId());
+            userInfo.setIdCard(req.getIdCard());
+            int l= userInfoMapper.updateByPrimaryKeySelective(userInfo);
+            logger.info("更新数据库记录：{}",l);
+        }
+
         return Result.getSuc();
     }
 
@@ -122,6 +127,7 @@ public class UserServiceImpl implements UserService {
         BeanUtils.copyProperties(req,userBasicInfo);
         //TODO,userId 是否存在，存在就更新
         userBasicInfoMapper.insertSelective(userBasicInfo);
+        //TODO,更新 tb_data_collection的
         return Result.getSuc();
     }
 
@@ -131,6 +137,7 @@ public class UserServiceImpl implements UserService {
         BeanUtils.copyProperties(userWorkReq,userWork);
         //TODO,userId 是否存在，存在就更新
         userWorkMapper.insertSelective(userWork);
+        //TODO,更新 tb_data_collection的
         return Result.getSuc();
     }
 
@@ -140,6 +147,7 @@ public class UserServiceImpl implements UserService {
         EmergencyContact emergencyContact = new EmergencyContact();
         BeanUtils.copyProperties(userEmergencyContactReq,emergencyContact);
         contactMapper.insertSelective(emergencyContact);
+        //TODO,更新 tb_data_collection的
         return null;
     }
 }

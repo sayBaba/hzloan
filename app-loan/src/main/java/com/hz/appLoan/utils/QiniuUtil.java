@@ -16,12 +16,8 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
-
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.UUID;
 
 /**
@@ -33,7 +29,6 @@ public class QiniuUtil {
     private static final Logger logger = LoggerFactory.getLogger(QiniuUtil.class);
 
     private static final String domain = "http://ppsp7z038.bkt.clouddn.com/";
-
     // 账号里面可以找到  进入 个人面板->个人中心->密钥管理可找到
     // 设置好账号的ACCESS_KEY和SECRET_KEY
     private static final String ACCESS_KEY = "MVpid4cKwKe4d8wt5PmJH5yO2c0ayhBxfcexkLJD"; // 这两个登录七牛
@@ -44,14 +39,6 @@ public class QiniuUtil {
     // 密钥
     private static final Auth auth = Auth.create(ACCESS_KEY, SECRET_KEY);
 
-//    private static final String DOMAIN = "你的图片上传路径";
-
-    private static final String style = "自定义的图片样式";
-
-    public static String getUpToken() {
-        return auth.uploadToken(BUCKET_NAME, null, 3600, new StringMap().put("insertOnly", 1));
-    }
-
 
     /**
      * 字节上传
@@ -59,42 +46,29 @@ public class QiniuUtil {
      * @throws Exception
      */
     public  String byteUpLoad (byte[] uploadBytes) throws Exception{
-        //构造一个带指定 Region 对象的配置类
-//        Configuration cfg = new Configuration(Region.region0());
+//      构造一个带指定 Region 对象的配置类
+//      Configuration cfg = new Configuration(Region.region0());
 
         UploadManager uploadManager = new UploadManager();
-
-
-//默认不指定key的情况下，以文件内容的hash值作为文件名
-            String key = UUID.randomUUID().toString();
+//      默认不指定key的情况下，以文件内容的hash值作为文件名
+        String key = UUID.randomUUID().toString();
 
         try {
-//            byte[] uploadBytes = "hello qiniu cloud".getBytes("utf-8");
             Auth auth = Auth.create(ACCESS_KEY, SECRET_KEY);
             String upToken = auth.uploadToken(BUCKET_NAME);
             logger.info("==========upToken=="+ upToken);
-            try {
-                Response response = uploadManager.put(uploadBytes, key, upToken);
-                System.err.println("============"+response.bodyString());
-                if (response.isOK()){
-                    return domain+key;
-                }
-                //解析上传成功的结果
-                DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
-                System.out.println(putRet.key);
-                System.out.println(putRet.hash);
-            } catch (QiniuException ex) {
-                Response r = ex.response;
-                System.err.println(r.toString());
-                try {
-                    System.err.println(r.bodyString());
-                } catch (QiniuException ex2) {
-                    //ignore
-                }
+
+            Response response = uploadManager.put(uploadBytes, key, upToken);
+            System.err.println("============"+response.bodyString());
+            if (response.isOK()){
+                return domain+key;
             }
+            //解析上传成功的结果
+            DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
+            System.out.println(putRet.key);
+            System.out.println(putRet.hash);
         } catch (Exception ex) {
             logger.error("UnsupportedEncodingException",ex);
-            //ignore
         }
         return null;
     }
