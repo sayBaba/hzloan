@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hz.loanBiz.mapper.DataCollectionMapper" >
+  <resultMap id="BaseResultMap" type="com.hz.loanBiz.model.DataCollection" >
+    <result column="id" property="id" jdbcType="BIGINT" />
+    <result column="basic_info_staus" property="basicInfoStaus" jdbcType="VARCHAR" />
+    <result column="work_info_status" property="workInfoStatus" jdbcType="VARCHAR" />
+    <result column="contant_info_status" property="contantInfoStatus" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="DATE" />
+    <result column="update_datte" property="updateDatte" jdbcType="DATE" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, basic_info_staus, work_info_status, contant_info_status, user_id, create_date, 
+    update_datte
+  </sql>
+
+  <insert id="insert" parameterType="com.hz.loanBiz.model.DataCollection" >
+    insert into tb_data_collection (id, basic_info_staus, work_info_status, 
+      contant_info_status, user_id, create_date, 
+      update_datte)
+    values (#{id,jdbcType=BIGINT}, #{basicInfoStaus,jdbcType=VARCHAR}, #{workInfoStatus,jdbcType=VARCHAR}, 
+      #{contantInfoStatus,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{createDate,jdbcType=DATE}, 
+      #{updateDatte,jdbcType=DATE})
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.hz.loanBiz.model.DataCollection" >
+    insert into tb_data_collection
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="basicInfoStaus != null" >
+        basic_info_staus,
+      </if>
+      <if test="workInfoStatus != null" >
+        work_info_status,
+      </if>
+      <if test="contantInfoStatus != null" >
+        contant_info_status,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateDatte != null" >
+        update_datte,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="basicInfoStaus != null" >
+        #{basicInfoStaus,jdbcType=VARCHAR},
+      </if>
+      <if test="workInfoStatus != null" >
+        #{workInfoStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="contantInfoStatus != null" >
+        #{contantInfoStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=DATE},
+      </if>
+      <if test="updateDatte != null" >
+        #{updateDatte,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+
+</mapper>
