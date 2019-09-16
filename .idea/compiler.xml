@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="zuul" />
+        <module name="hz-manager" />
         <module name="hzloan" />
         <module name="locan-biz" />
         <module name="eureka" />
@@ -24,6 +25,7 @@
       <module name="app-loan" options="-parameters" />
       <module name="demo" options="-parameters" />
       <module name="eureka" options="-parameters" />
+      <module name="hz-manager" options="-parameters" />
       <module name="loan-pay" options="-parameters" />
       <module name="locan-biz" options="-parameters" />
       <module name="user-loan" options="-parameters" />
